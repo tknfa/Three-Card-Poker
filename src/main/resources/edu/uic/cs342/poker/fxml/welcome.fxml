@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uic.cs342.poker.controller.WelcomeController">
-    <children>
-        <!-- Center Menu Card / Container (Height adjusted to fit 4 buttons nicely) -->
-        <Pane layoutX="350.0" layoutY="165.0" prefHeight="330.0" prefWidth="400.0" styleClass="table-panel">
-            <children>
-                <!-- Title Header -->
-                <Label alignment="CENTER" layoutX="50.0" layoutY="30.0" prefWidth="300.0" text="THREE CARD POKER">
-                    <font>
-                        <Font name="Georgia Bold" size="22.0" />
-                    </font>
-                </Label>
-                <Label alignment="CENTER" layoutX="50.0" layoutY="60.0" prefWidth="300.0" text="Multiplayer Casino Edition">
-                    <font>
-                        <Font name="Georgia Italic" size="13.0" />
-                    </font>
-                </Label>
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.uic.cs342.poker.controller.WelcomeController"
+      prefWidth="1000" prefHeight="650"
+      alignment="CENTER" spacing="18" styleClass="screen-root">
+    <padding>
+        <Insets top="28" right="28" bottom="28" left="28"/>
+    </padding>
 
-                <!-- Navigation & Theme Buttons -->
-                <Button layoutX="100.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleStartGame" prefHeight="38.0" prefWidth="200.0" styleClass="gold-button" text="Start Game" />
-                <Button layoutX="100.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleShowRules" prefHeight="38.0" prefWidth="200.0" styleClass="secondary-button" text="Rules &amp; How to Play" />
-                <Button layoutX="100.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleToggleTheme" prefHeight="38.0" prefWidth="200.0" styleClass="secondary-button" text="Change Theme" />
-                <Button layoutX="100.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleQuitGame" prefHeight="38.0" prefWidth="200.0" styleClass="secondary-button" text="Quit" />
-            </children>
-        </Pane>
-    </children>
-</AnchorPane>
+    <VBox alignment="CENTER" spacing="8" prefWidth="450" maxWidth="450"
+          minHeight="138" styleClass="table-panel">
+        <Label text="THREE CARD POKER" styleClass="menu-title"/>
+        <Label text="Multiplayer Casino Edition" styleClass="menu-subtitle"/>
+        <VBox.margin>
+            <Insets bottom="64"/>
+        </VBox.margin>
+    </VBox>
+
+    <HBox alignment="CENTER" spacing="64">
+        <Button fx:id="startButton" id="startButton" text="Start Game" prefWidth="200" minHeight="44"
+                styleClass="gold-button" onAction="#handleStartGame"/>
+        <Button id="rulesButton" text="Rules &amp; How to Play" prefWidth="200" minHeight="44"
+                styleClass="secondary-button" onAction="#handleShowRules"/>
+    </HBox>
+
+    <Button id="quitButton" text="Quit" prefWidth="132" minHeight="44"
+            styleClass="secondary-button" onAction="#handleQuitGame"/>
+
+    <Button fx:id="themeButton" id="themeButton" text="Theme: Navy — Change" prefWidth="232" minHeight="44"
+            styleClass="secondary-button" onAction="#handleToggleTheme">
+        <VBox.margin>
+            <Insets top="14"/>
+        </VBox.margin>
+    </Button>
+</VBox>

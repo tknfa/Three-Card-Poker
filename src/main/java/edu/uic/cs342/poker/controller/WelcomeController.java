@@ -13,6 +13,9 @@ public class WelcomeController implements ScreenController {
     @FXML
     private Button startButton;
 
+    @FXML
+    private Button themeButton;
+
     @Override
     public void setNavigator(ScreenNavigator navigator) {
         this.navigator = navigator;
@@ -25,10 +28,12 @@ public class WelcomeController implements ScreenController {
         } else {
             startButton.setText("Start Game");
         }
+
+        updateThemeButton();
     }
 
     @FXML
-    private void handleStartButton() {
+    private void handleStartGame() {
         if (gameService.getPhase() == GamePhase.READY) {
             gameService.startGame();
         } else if (gameService.getPhase() == GamePhase.RESULTS) {
@@ -39,12 +44,26 @@ public class WelcomeController implements ScreenController {
     }
 
     @FXML
-    private void handleRulesButton() {
+    private void handleShowRules() {
         navigator.showRules();
     }
 
     @FXML
-    private void handleQuitButton() {
+    private void handleToggleTheme() {
+        navigator.toggleTheme();
+        updateThemeButton();
+    }
+
+    private void updateThemeButton() {
+        if (navigator.isAlternateTheme()) {
+            themeButton.setText("Theme: Crimson — Change");
+        } else {
+            themeButton.setText("Theme: Navy — Change");
+        }
+    }
+
+    @FXML
+    private void handleQuitGame() {
         navigator.requestQuit();
     }
 }

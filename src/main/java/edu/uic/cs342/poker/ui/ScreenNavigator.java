@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class ScreenNavigator {
     private final Stage stage;
     private final GameService gameService;
+    private boolean alternateTheme;
 
     public ScreenNavigator(Stage stage, GameService gameService) {
         this.stage = stage;
@@ -39,10 +40,22 @@ public class ScreenNavigator {
     }
 
     public void showGameplay() {
+        if (gameService.getPhase() == GamePhase.READY) {
+            showWelcome();
+            return;
+        }
+        if (gameService.getPhase() == GamePhase.RESULTS) {
+            showResults();
+            return;
+        }
         showScreen("gameplay.fxml");
     }
 
     public void showResults() {
+        if (gameService.getPhase() != GamePhase.RESULTS) {
+            showGameplay();
+            return;
+        }
         showScreen("results.fxml");
     }
 
@@ -64,10 +77,28 @@ public class ScreenNavigator {
     }
 
     private void setScene(Parent root) {
-        Scene scene = new Scene(root, 900, 600);
+        Scene scene = new Scene(root, 1000, 650);
+        if (alternateTheme) {
+            root.getStyleClass().add("classic-green");
+        }
         scene.getStylesheets().add(ScreenNavigator.class.getResource("/edu/uic/cs342/poker/css/style.css").toExternalForm());
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public boolean isAlternateTheme() {
+        return alternateTheme;
+    }
+
+    public void toggleTheme() {
+        alternateTheme = !alternateTheme;
+        Parent root = stage.getScene().getRoot();
+        if (alternateTheme) {
+            root.getStyleClass().add("classic-green");
+        } else {
+            root.getStyleClass().remove("classic-green");
+        }
     }
 
     public void requestQuit() {

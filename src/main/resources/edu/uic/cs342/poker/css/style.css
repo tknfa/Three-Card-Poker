@@ -1,6 +1,3 @@
-/* ==========================================================================
-   DEFAULT THEME: CUSTOM NAVY PALETTE (Theme 1)
-   ========================================================================== */
 .root {
     -fx-base-background: #112250;
     -fx-secondary-background: #1c3269;
@@ -13,9 +10,6 @@
     -fx-background-color: #112250;
 }
 
-/* ==========================================================================
-   SECOND THEME: CRIMSON WINE VIP LOUNGE (Theme 2)
-   ========================================================================== */
 .root.classic-green {
     -fx-base-background: #1f0c10;
     -fx-secondary-background: #2a1117;
@@ -28,17 +22,11 @@
     -fx-background-color: #1f0c10;
 }
 
-/* ==========================================================================
-   TYPOGRAPHY & GLOBAL STYLES
-   ========================================================================== */
 .label {
     -fx-font-family: "Georgia";
     -fx-text-fill: -fx-text-primary;
 }
 
-/* ==========================================================================
-   BUTTONS & CONTROLS
-   ========================================================================== */
 .gold-button {
     -fx-background-color: -fx-accent-gold;
     -fx-text-fill: -fx-base-background;
@@ -62,9 +50,6 @@
     -fx-opacity: 0.85;
 }
 
-/* ==========================================================================
-   PANELS, CARD TRAYS & PRESENTATION
-   ========================================================================== */
 .table-panel {
     -fx-background-color: -fx-panel-background;
     -fx-background-radius: 18px;
@@ -92,31 +77,26 @@
     -fx-background-color: rgba(31, 12, 16, 0.85);
 }
 
-/* ==========================================================================
-   THEME-AWARE BACKGROUND IMAGE ASSETS
-   ========================================================================== */
-/* Table Colors */
 .table-background {
-    -fx-background-image: url("../../../../../../../../../../../Desktop/Three-Card-Poker/src/main/resources/edu/uic/cs342/poker/images/Table.png");
+    -fx-background-image: url("../images/Table.png");
     -fx-background-size: 100% 100%;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 .root.classic-green .table-background {
-    -fx-background-image: url("../../../../../../../../../../../Desktop/Three-Card-Poker/src/main/resources/edu/uic/cs342/poker/images/TableRed.png");
+    -fx-background-image: url("../images/TableRed.png");
 }
 
-/* Info boxes */
 .info-box-panel {
-    -fx-background-image: url("../../../../../../../../../../../Desktop/Three-Card-Poker/src/main/resources/edu/uic/cs342/poker/images/InfoBox.png");
+    -fx-background-image: url("../images/InfoBox.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
 
 .root.classic-green .info-box-panel {
-    -fx-background-image: url("../../../../../../../../../../../Desktop/Three-Card-Poker/src/main/resources/edu/uic/cs342/poker/images/InfoBoxRed.png");
+    -fx-background-image: url("../images/InfoBoxRed.png");
 }
 
 /* Base Background Color */
@@ -126,4 +106,66 @@
 
 .root.classic-green .screen-base-background {
     -fx-background-color: #140609;
+}
+
+.card-face, .card-back {
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+.card-face { -fx-background-image: url("../images/Blank_Card.png"); }
+.card-back { -fx-background-image: url("../images/Card_Back.png"); }
+.root.classic-green .card-face { -fx-background-image: url("../images/BlankCardRed.png"); }
+.root.classic-green .card-back { -fx-background-image: url("../images/CardBackRed.png"); }
+.card-face .label { -fx-text-fill: #202020; -fx-font-weight: bold; }
+.card-face .red-suit { -fx-text-fill: #9e202d; }
+.card-rank { -fx-font-size: 16px; }
+.card-suit { -fx-font-size: 24px; }
+.result-card-inner .label { -fx-text-fill: #131820; }
+.root.classic-green.screen-base-background { -fx-background-color: #140609; }
+.gold-button:focused, .secondary-button:focused, .button:focused {
+    -fx-border-color: -fx-accent-gold;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+.gold-button:disabled, .secondary-button:disabled { -fx-opacity: 0.45; }
+.screen-root { -fx-background-color: -fx-base-background; }
+.info-panel { -fx-background-color: -fx-panel-background; -fx-padding: 16px; -fx-background-radius: 12px; }
+.screen-title { -fx-font-size: 26px; -fx-font-weight: bold; }
+.section-title, .wager-heading { -fx-font-size: 18px; -fx-font-weight: bold; }
+.status-label { -fx-text-fill: -fx-text-muted; }
+
+.menu-title {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-accent-gold;
+}
+.menu-subtitle {
+    -fx-font-size: 15px;
+    -fx-font-style: italic;
+    -fx-text-fill: -fx-text-primary;
+}
+#startButton, #rulesButton, #quitButton, #themeButton, #rulesBackButton {
+    -fx-font-size: 15px;
+    -fx-border-width: 2px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8px;
+}
+#startButton:focused, #rulesButton:focused, #quitButton:focused,
+#themeButton:focused, #rulesBackButton:focused {
+    -fx-border-color: -fx-text-primary;
+}
+.rules-panel {
+    -fx-background-color: -fx-panel-background;
+    -fx-background-radius: 12px;
+    -fx-padding: 14px 16px;
+}
+.rules-copy {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-primary;
+}
+.rules-rank {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
 }

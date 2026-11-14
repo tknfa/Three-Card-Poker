@@ -1,35 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="edu.uic.cs342.poker.controller.RulesController"
-      alignment="CENTER" spacing="20" styleClass="screen-root">
-    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
-    <Label id="rulesTitle" text="Game Rules" styleClass="screen-title"/>
-    <HBox alignment="CENTER" spacing="24">
-        <VBox spacing="14" prefWidth="400" styleClass="info-panel">
-            <Label text="How to Play" styleClass="section-title"/>
-            <Label text="Each player competes independently against the dealer." wrapText="true"/>
-            <Label text="1. Place an Ante of $5-$25 and an optional Pair Plus of $5-$25." wrapText="true"/>
-            <Label text="2. Receive three cards. The dealer's cards remain hidden." wrapText="true"/>
-            <Label text="3. Choose Play (match the Ante) or Fold (forfeit wagers)." wrapText="true"/>
-            <Label text="4. Reveal the dealer's hand. The dealer needs Queen-high or better to qualify." wrapText="true"/>
-            <Label text="5. View each player's results and updated winnings." wrapText="true"/>
-        </VBox>
-        <VBox spacing="12" prefWidth="250" styleClass="info-panel">
-            <Label text="Hand Ranks / Pair Plus" styleClass="section-title" wrapText="true"/>
-            <Label text="Straight Flush: 40:1"/>
-            <Label text="Three of a Kind: 30:1"/>
-            <Label text="Straight: 6:1"/>
-            <Label text="Flush: 3:1"/>
-            <Label text="Pair: 1:1"/>
-            <Label text="High Card: no payout"/>
-        </VBox>
-    </HBox>
-    <Label text="Rules preview — detailed settlement instructions will be added with game logic." styleClass="status-label" wrapText="true"/>
-    <Button id="rulesBackButton" text="Back to Main Menu" onAction="#handleBackButton"/>
+      prefWidth="1000" prefHeight="650"
+      alignment="CENTER" spacing="12" styleClass="screen-root">
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <VBox maxWidth="900" prefWidth="900" alignment="TOP_CENTER" spacing="12">
+
+        <HBox alignment="CENTER_RIGHT" spacing="12">
+            <Label id="rulesTitle" text="Game Rules" styleClass="screen-title"
+                   prefWidth="768"/>
+            <Button id="rulesBackButton" text="× Close" prefWidth="120" minHeight="40"
+                    styleClass="secondary-button" onAction="#handleBackButton"/>
+        </HBox>
+
+        <HBox alignment="TOP_CENTER" spacing="16">
+
+            <VBox spacing="14" prefWidth="550" maxWidth="550">
+                <VBox spacing="6" styleClass="rules-panel">
+                    <Label text="Game Description" styleClass="section-title"/>
+                    <Label text="Two players compete independently against the dealer. Each receives three cards, and each player's wagers and winnings are tracked separately."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                </VBox>
+
+                <VBox spacing="7" styleClass="rules-panel">
+                    <Label text="Game Phases and Rules" styleClass="section-title"/>
+                    <Label text="1. Place a $5–$25 Ante. Pair Plus is optional ($5–$25, or $0 / blank). Both players must confirm before dealing."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                    <Label text="2. Each player and the dealer receive three cards. The dealer's cards stay hidden until both decisions are made."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                    <Label text="3. On your turn, choose Play (match your Ante) or Fold (forfeit Ante and Pair Plus)."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                    <Label text="4. Showdown: the dealer qualifies with Queen-high or better. Otherwise Play is returned and Ante carries forward."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                    <Label text="5. Review the separate round outcomes, wager results and cumulative winnings. Play Again begins the next round."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                    <Label text="Current settlement: Ante and Play pay 1:1 on a win; both are lost on a loss and returned on a tie. The same carried Ante is used next round."
+                           wrapText="true" maxWidth="518" styleClass="rules-copy"/>
+                </VBox>
+            </VBox>
+
+            <VBox spacing="6" prefWidth="334" maxWidth="334" styleClass="rules-panel">
+                <Label text="Hand Ranks &amp; Payouts" styleClass="section-title"/>
+                <Label text="Highest to lowest • Pair Plus profit" wrapText="true"
+                       maxWidth="302" styleClass="rules-copy"/>
+                <Label text="1. Straight Flush — 40:1" styleClass="rules-rank"/>
+                <Label text="Three consecutive ranks, same suit." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="2. Three of a Kind — 30:1" styleClass="rules-rank"/>
+                <Label text="Three cards of the same rank." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="3. Straight — 6:1" styleClass="rules-rank"/>
+                <Label text="Three consecutive ranks." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="4. Flush — 3:1" styleClass="rules-rank"/>
+                <Label text="Three cards of the same suit." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="5. Pair — 1:1" styleClass="rules-rank"/>
+                <Label text="Two cards of the same rank." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="6. High Card — no payout" styleClass="rules-rank"/>
+                <Label text="None of the higher classifications." wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="Pair Plus is settled independently of the dealer for players who do not fold."
+                       wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+                <Label text="Current version: Ace = 14; A–2–3 is not a straight. Tie-breaks use card ranks, not suits."
+                       wrapText="true" maxWidth="302" styleClass="rules-copy"/>
+            </VBox>
+        </HBox>
+    </VBox>
 </VBox>
