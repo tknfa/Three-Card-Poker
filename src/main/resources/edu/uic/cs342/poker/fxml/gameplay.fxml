@@ -1,35 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="edu.uic.cs342.poker.controller.GameplayController"
-      alignment="CENTER" spacing="16" styleClass="screen-root">
-    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
-    <Label id="gameplayTitle" text="Three Card Poker - Gameplay" styleClass="screen-title"/>
-    <VBox alignment="CENTER" spacing="10" styleClass="info-panel">
-        <Label text="Dealer" styleClass="section-title"/>
-        <Label text="[Hidden]   [Hidden]   [Hidden]"/>
-    </VBox>
-    <Label text="Wagering | Navigation preview" styleClass="section-title"/>
-    <Label text="No cards have been dealt and no wagers are active." styleClass="status-label"/>
-    <HBox alignment="CENTER" spacing="24">
-        <VBox alignment="CENTER" spacing="12" prefWidth="240" styleClass="info-panel">
-            <Label text="Player 1" styleClass="section-title"/>
-            <Label text="Cards and wager controls go here." wrapText="true"/>
-        </VBox>
-        <VBox alignment="CENTER" spacing="12" prefWidth="240" styleClass="info-panel">
-            <Label text="Player 2" styleClass="section-title"/>
-            <Label text="Cards and wager controls go here." wrapText="true"/>
-        </VBox>
-    </HBox>
-    <Label text="Temporary controls for checking screen navigation only." styleClass="status-label"/>
-    <HBox alignment="CENTER" spacing="16">
-        <Button id="previewResultsButton" text="Preview Results" onAction="#handlePreviewResults"/>
-        <Button id="gameplayMenuButton" text="Main Menu" onAction="#handleMainMenu"/>
-    </HBox>
-</VBox>
+<StackPane styleClass="screen-base-background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uic.cs342.poker.controller.TableController">
+    <children>
+        <!-- Background Layer -->
+        <Pane fx:id="backgroundImage" minHeight="650.0" minWidth="1000.0" prefHeight="650.0" prefWidth="1000.0" maxHeight="650.0" maxWidth="1000.0" styleClass="table-background" StackPane.alignment="TOP_CENTER" />
 
+        <!-- Interactive Game Overlay Pane -->
+        <AnchorPane maxHeight="650.0" maxWidth="1000.0" minHeight="650.0" minWidth="1000.0" prefHeight="650.0" prefWidth="1000.0">
+            <children>
+
+                <!-- CENTER-TOP: GAME STATE & TURN DISPLAY -->
+                <VBox alignment="CENTER" layoutX="350.0" layoutY="370.0" prefWidth="300.0" spacing="4.0">
+                    <children>
+                        <Label fx:id="roundStateLabel" text="PLAYER 1'S TURN" textFill="#A0B0C0">
+                            <font>
+                                <Font name="Georgia Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="roundStateSubtitle" text="PLAY OR FOLD" textFill="#A0B0C0">
+                            <font>
+                                <Font name="Georgia" size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <!-- TOP-LEFT: CUMULATIVE WINNINGS BOX -->
+                <StackPane layoutX="20.0" layoutY="15.0" prefHeight="50.0" prefWidth="215.0">
+                    <children>
+                        <Pane minWidth="215.0" minHeight="50.0" prefWidth="215.0" prefHeight="50.0" maxWidth="215.0" maxHeight="50.0" styleClass="info-box-panel" />
+                        <VBox alignment="CENTER_LEFT" spacing="2" style="-fx-padding: 0 0 0 10;">
+                            <children>
+                                <Label fx:id="p1CumulativeWinningsLabel" text="Player 1's Cumulative Winnings: $320" textFill="#D4AF37">
+                                    <font>
+                                        <Font name="Georgia" size="9.5" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="p2CumulativeWinningsLabel" text="Player 2's Cumulative Winnings: $63" textFill="#D4AF37">
+                                    <font>
+                                        <Font name="Georgia" size="9.5" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+
+                <!-- TOP-RIGHT: HINT BANNER & HIDE HINTS BUTTON -->
+                <Pane layoutX="725.0" layoutY="15.0" prefHeight="90.0" prefWidth="255.0" styleClass="table-panel">
+                    <children>
+                        <Label fx:id="hintTitleLabel" layoutX="12.0" layoutY="7.0" text="ⓘ Player 1's Turn" textFill="#D4AF37">
+                            <font>
+                                <Font name="Georgia Bold" size="11.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="hintDescriptionLabel" layoutX="12.0" layoutY="24.0" prefWidth="230.0" text="Choose either to &quot;Play&quot; or &quot;Fold&quot;. &quot;Play&quot; will wager equal to your Ante wager." textFill="#A0B0C0" wrapText="true">
+                            <font>
+                                <Font size="9.5" />
+                            </font>
+                        </Label>
+                        <Button layoutX="85.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleHideHints" styleClass="secondary-button" text="Hide Hints" />
+                    </children>
+                </Pane>
+
+                <!-- TOP-CENTER: DEALER CARD SLOT -->
+                <HBox fx:id="dealerCardBox" alignment="CENTER" layoutX="315.0" layoutY="40.0" prefHeight="100.0" prefWidth="215.0" spacing="5.0" />
+
+                <!-- PLAYER 1: ANTE & PAIR PLUS DISPLAY BOX -->
+                <StackPane layoutX="-15.0" layoutY="490.0" prefHeight="50.0" prefWidth="105.0">
+                    <children>
+                        <Pane minWidth="70.0" minHeight="50.0" prefWidth="70.0" prefHeight="50.0" maxWidth="70.0" maxHeight="50.0" styleClass="info-box-panel" />
+                        <VBox alignment="CENTER_LEFT" spacing="2" style="-fx-padding: 0 0 0 23;">
+                            <children>
+                                <Label fx:id="p1AnteDisplayLabel" text="Ante: $20" textFill="#D4AF37">
+                                    <font><Font name="Georgia" size="10.0" /></font>
+                                </Label>
+                                <Label fx:id="p1PairPlusDisplayLabel" text="Pair Plus: $15" textFill="#D4AF37">
+                                    <font><Font name="Georgia" size="10.0" /></font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+
+                <!-- BOTTOM-LEFT: PLAYER 1 CARDS & CONTROLS -->
+                <HBox fx:id="player1CardBox" alignment="CENTER" layoutX="25.0" layoutY="545.0" prefHeight="100.0" prefWidth="215.0" spacing="5.0" />
+
+                <HBox fx:id="player1ControlBox" layoutX="85.0" layoutY="500.0" spacing="5.0">
+                    <children>
+                        <Button fx:id="p1PlayButton" mnemonicParsing="false" onAction="#handlePlayer1Play" prefWidth="85.0" styleClass="gold-button" text="Play" />
+                        <Button fx:id="p1FoldButton" mnemonicParsing="false" onAction="#handlePlayer1Fold" prefWidth="85.0" styleClass="secondary-button" text="Fold" />
+                    </children>
+                </HBox>
+
+                <!-- PLAYER 2: ANTE & PAIR PLUS DISPLAY BOX -->
+                <StackPane layoutX="895.0" layoutY="490.0" prefHeight="50.0" prefWidth="105.0">
+                    <children>
+                        <Pane minWidth="70.0" minHeight="50.0" prefWidth="70.0" prefHeight="50.0" maxWidth="70.0" maxHeight="50.0" styleClass="info-box-panel" />
+                        <VBox alignment="CENTER_LEFT" spacing="2" style="-fx-padding: 0 0 0 23;">
+                            <children>
+                                <Label fx:id="p2AnteDisplayLabel" text="Ante: $10" textFill="#D4AF37">
+                                    <font><Font name="Georgia" size="10.0" /></font>
+                                </Label>
+                                <Label fx:id="p2PairPlusDisplayLabel" text="Pair Plus: $7" textFill="#D4AF37">
+                                    <font><Font name="Georgia" size="10.0" /></font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+
+                <!-- BOTTOM-RIGHT: PLAYER 2 CARDS & CONTROLS -->
+                <HBox fx:id="player2CardBox" alignment="CENTER" layoutX="605.0" layoutY="545.0" prefHeight="100.0" prefWidth="215.0" spacing="5.0" />
+
+                <HBox fx:id="player2ControlBox" layoutX="725.0" layoutY="500.0" spacing="5.0">
+                    <children>
+                        <Button fx:id="p2PlayButton" mnemonicParsing="false" onAction="#handlePlayer2Play" prefWidth="85.0" styleClass="gold-button" text="Play" />
+                        <Button fx:id="p2FoldButton" mnemonicParsing="false" onAction="#handlePlayer2Fold" prefWidth="85.0" styleClass="secondary-button" text="Fold" />
+                    </children>
+                </HBox>
+
+                <!--  CENTER: Results Button During Showdown -->
+                <Button fx:id="viewResultsButton" layoutX="425.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleViewResults" prefHeight="40.0" prefWidth="150.0" styleClass="gold-button" text="📊 View Results" visible="false" />
+
+                <!-- CENTER: CURRENT WAGERS (SPLIT BOX) -->
+                <StackPane layoutX="380.0" layoutY="520.0" prefHeight="75.0" prefWidth="240.0">
+                    <children>
+                        <Pane minWidth="200.0" minHeight="65.0" prefWidth="200.0" prefHeight="65.0" maxWidth="200.0" maxHeight="65.0" styleClass="info-box-panel" />
+                        <Pane prefHeight="75.0" prefWidth="240.0">
+                            <children>
+                                <Label alignment="CENTER" layoutX="15.0" layoutY="8.0" prefWidth="100.0" text="Player 1's" textFill="#D4AF37">
+                                    <font><Font name="Georgia Bold" size="10.0" /></font>
+                                </Label>
+                                <Label alignment="CENTER" layoutX="125.0" layoutY="8.0" prefWidth="100.0" text="Player 2's" textFill="#D4AF37">
+                                    <font><Font name="Georgia Bold" size="10.0" /></font>
+                                </Label>
+                                <Label alignment="CENTER" layoutX="15.0" layoutY="22.0" prefWidth="100.0" text="Current Wager:" textFill="#A0B0C0">
+                                    <font><Font size="9.0" /></font>
+                                </Label>
+                                <Label alignment="CENTER" layoutX="125.0" layoutY="22.0" prefWidth="100.0" text="Current Wager:" textFill="#A0B0C0">
+                                    <font><Font size="9.0" /></font>
+                                </Label>
+                                <Label fx:id="p1CurrentWagerLabel" alignment="CENTER" layoutX="15.0" layoutY="42.0" prefWidth="100.0" text="\$35" textFill="#D4AF37">
+                                    <font><Font name="Georgia Bold" size="12.0" /></font>
+                                </Label>
+                                <Label fx:id="p2CurrentWagerLabel" alignment="CENTER" layoutX="125.0" layoutY="42.0" prefWidth="100.0" text="\$17" textFill="#D4AF37">
+                                    <font><Font name="Georgia Bold" size="12.0" /></font>
+                                </Label>
+                                <!-- Vertical divider line -->
+                                <Pane layoutX="120.0" layoutY="8.0" prefHeight="60.0" prefWidth="1.0" style="-fx-background-color: #D4AF37; -fx-opacity: 0.4;" />
+                            </children>
+                        </Pane>
+                    </children>
+                </StackPane>
+
+                <!-- CENTER: TOTAL BETS IN PLAY -->
+                <StackPane layoutX="380.0" layoutY="595.0" prefHeight="50.0" prefWidth="240.0">
+                    <children>
+                        <Pane minWidth="200.0" minHeight="50.0" prefWidth="200.0" prefHeight="50.0" maxWidth="200.0" maxHeight="50.0" styleClass="info-box-panel" />
+                        <VBox alignment="CENTER" spacing="2">
+                            <children>
+                                <Label text="Total Bets In Play:" textFill="#A0B0C0">
+                                    <font><Font size="10.0" /></font>
+                                </Label>
+                                <Label fx:id="totalBetsLabel" text="\$52" textFill="#D4AF37">
+                                    <font><Font name="Georgia Bold" size="13.0" /></font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+            </children>
+        </AnchorPane>
+
+        <!-- WAGER SCREEN POPUP OVERLAY -->
+        <AnchorPane fx:id="wagerOverlayPane" style="-fx-background-color: rgba(5, 8, 12, 0.85);">
+            <children>
+                <!-- Player 1 Wager Box -->
+                <Pane layoutX="130.0" layoutY="155.0" prefHeight="240.0" prefWidth="330.0" styleClass="table-panel">
+                    <children>
+                        <Label alignment="CENTER" layoutX="65.0" layoutY="12.0" text="Player 1's Wagers" textFill="#D4AF37">
+                            <font><Font name="Georgia Bold" size="16.0" /></font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="105.0" layoutY="35.0" text="Min $5 - Max $25" textFill="#A0B0C0">
+                            <font><Font size="10.0" /></font>
+                        </Label>
+
+                        <Label layoutX="35.0" layoutY="68.0" text="Ante ($5 - $25)" textFill="#D4AF37">
+                            <font><Font size="11.0" /></font>
+                        </Label>
+                        <TextField fx:id="p1AnteField" layoutX="35.0" layoutY="88.0" prefWidth="115.0" promptText="e.g. 10" />
+
+                        <Label layoutX="175.0" layoutY="68.0" text="Pair Plus (opt.)" textFill="#D4AF37">
+                            <font><Font size="11.0" /></font>
+                        </Label>
+                        <TextField fx:id="p1PairPlusField" layoutX="175.0" layoutY="88.0" prefWidth="115.0" promptText="e.g. 5" />
+
+                        <Button layoutX="115.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleP1ConfirmWager" prefWidth="100.0" styleClass="gold-button" text="✓ Confirm" />
+                        <Label fx:id="p1WagerStatusLabel" alignment="CENTER" layoutX="40.0" layoutY="205.0" prefWidth="250.0" text="Waiting for wager..." textFill="#A0B0C0" />
+                    </children>
+                </Pane>
+
+                <!-- Player 2 Wager Box -->
+                <Pane layoutX="540.0" layoutY="155.0" prefHeight="240.0" prefWidth="330.0" styleClass="table-panel">
+                    <children>
+                        <Label alignment="CENTER" layoutX="65.0" layoutY="12.0" text="Player 2's Wagers" textFill="#D4AF37">
+                            <font><Font name="Georgia Bold" size="16.0" /></font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="105.0" layoutY="35.0" text="Min $5 - Max $25" textFill="#A0B0C0">
+                            <font><Font size="10.0" /></font>
+                        </Label>
+
+                        <Label layoutX="35.0" layoutY="68.0" text="Ante ($5 - $25)" textFill="#D4AF37">
+                            <font><Font size="11.0" /></font>
+                        </Label>
+                        <TextField fx:id="p2AnteField" layoutX="35.0" layoutY="88.0" prefWidth="115.0" promptText="e.g. 10" />
+
+                        <Label layoutX="175.0" layoutY="68.0" text="Pair Plus (opt.)" textFill="#D4AF37">
+                            <font><Font size="11.0" /></font>
+                        </Label>
+                        <TextField fx:id="p2PairPlusField" layoutX="175.0" layoutY="88.0" prefWidth="115.0" promptText="e.g. 10" />
+
+                        <Button layoutX="115.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleP2ConfirmWager" prefWidth="100.0" styleClass="gold-button" text="✓ Confirm" />
+                        <Label fx:id="p2WagerStatusLabel" alignment="CENTER" layoutX="40.0" layoutY="205.0" prefWidth="250.0" text="Waiting for wager..." textFill="#A0B0C0" />
+                    </children>
+                </Pane>
+
+                <!-- Deal Button to start round once both confirmed -->
+                <Button fx:id="startDealButton" layoutX="425.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleStartDealAfterWagers" prefHeight="40.0" prefWidth="150.0" styleClass="gold-button" text="▶ Deal" visible="false" />
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>
