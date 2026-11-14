@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.uic.cs342.poker.controller.GameplayController"
+      alignment="CENTER" spacing="16" styleClass="screen-root">
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+    <Label id="gameplayTitle" text="Three Card Poker - Gameplay" styleClass="screen-title"/>
+    <VBox alignment="CENTER" spacing="10" styleClass="info-panel">
+        <Label text="Dealer" styleClass="section-title"/>
+        <Label text="[Hidden]   [Hidden]   [Hidden]"/>
+    </VBox>
+    <Label text="Wagering | Navigation preview" styleClass="section-title"/>
+    <Label text="No cards have been dealt and no wagers are active." styleClass="status-label"/>
+    <HBox alignment="CENTER" spacing="24">
+        <VBox alignment="CENTER" spacing="12" prefWidth="240" styleClass="info-panel">
+            <Label text="Player 1" styleClass="section-title"/>
+            <Label text="Cards and wager controls go here." wrapText="true"/>
+        </VBox>
+        <VBox alignment="CENTER" spacing="12" prefWidth="240" styleClass="info-panel">
+            <Label text="Player 2" styleClass="section-title"/>
+            <Label text="Cards and wager controls go here." wrapText="true"/>
+        </VBox>
+    </HBox>
+    <Label text="Temporary controls for checking screen navigation only." styleClass="status-label"/>
+    <HBox alignment="CENTER" spacing="16">
+        <Button id="previewResultsButton" text="Preview Results" onAction="#handlePreviewResults"/>
+        <Button id="gameplayMenuButton" text="Main Menu" onAction="#handleMainMenu"/>
+    </HBox>
+</VBox>
+
