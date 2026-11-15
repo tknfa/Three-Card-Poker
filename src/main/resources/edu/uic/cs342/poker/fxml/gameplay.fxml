@@ -41,17 +41,17 @@
                             mnemonicParsing="false" styleClass="secondary-button" />
                 </VBox>
 
-                <HBox fx:id="dealerCardBox" alignment="CENTER" layoutX="392.5" layoutY="35"
-                      prefHeight="100" prefWidth="215" spacing="5" />
+                <HBox fx:id="dealerCardBox" alignment="CENTER" layoutX="337" layoutY="40"
+                      prefHeight="160" prefWidth="325" spacing="5" />
 
-                <Label fx:id="dealerShowdownLabel" layoutX="310" layoutY="140" prefWidth="380"
+                <Label fx:id="dealerShowdownLabel" layoutX="310" layoutY="200" prefWidth="380"
                        alignment="CENTER" textAlignment="CENTER" wrapText="true" visible="false"
                        styleClass="game-info-heading" />
 
-                <VBox alignment="CENTER" layoutX="330" layoutY="360" prefWidth="340" spacing="4">
-                    <Label fx:id="roundStateLabel" wrapText="true" maxWidth="340"
+                <VBox alignment="CENTER" layoutX="320" layoutY="380" minWidth="360" prefWidth="360" maxWidth="360" spacing="4">
+                    <Label fx:id="roundStateLabel" wrapText="true" maxWidth="360" alignment="CENTER"
                            textAlignment="CENTER" text="Round" styleClass="game-phase-heading" />
-                    <Label fx:id="roundStateSubtitle" wrapText="true" maxWidth="340"
+                    <Label fx:id="roundStateSubtitle" wrapText="true" maxWidth="360" alignment="CENTER"
                            textAlignment="CENTER" text="Waiting" styleClass="game-phase-copy" />
                 </VBox>
 
@@ -70,8 +70,8 @@
                     <Button fx:id="p1FoldButton" onAction="#handlePlayer1Fold" prefWidth="90"
                             styleClass="secondary-button" text="Fold" accessibleText="Player 1 Fold" disable="true" />
                 </HBox>
-                <HBox fx:id="player1CardBox" alignment="CENTER" layoutX="24" layoutY="546"
-                      prefHeight="100" prefWidth="215" spacing="5" />
+                <HBox fx:id="player1CardBox" alignment="CENTER" layoutX="14" layoutY="545"
+                      prefHeight="160" prefWidth="325" spacing="5" />
                 <VBox layoutX="880" layoutY="491" prefWidth="108" alignment="CENTER_LEFT"
                       spacing="3" styleClass="game-info-panel">
                     <Label fx:id="p2AnteDisplayLabel" text="Ante: $0" styleClass="game-info-copy" />
@@ -83,8 +83,8 @@
                     <Button fx:id="p2FoldButton" onAction="#handlePlayer2Fold" prefWidth="90"
                             styleClass="secondary-button" text="Fold" accessibleText="Player 2 Fold" disable="true" />
                 </HBox>
-                <HBox fx:id="player2CardBox" alignment="CENTER" layoutX="761" layoutY="546"
-                      prefHeight="100" prefWidth="215" spacing="5" />
+                <HBox fx:id="player2CardBox" alignment="CENTER" layoutX="661" layoutY="545"
+                      prefHeight="160" prefWidth="325" spacing="5" />
 
                 <Button fx:id="handHelpButton" id="handHelpButton" layoutX="425" layoutY="480"
                         prefHeight="32" prefWidth="150" text="Hand Help" visible="false" disable="true"
@@ -94,7 +94,7 @@
                         prefWidth="150" onAction="#handleViewResults" styleClass="gold-button"
                         text="View Results" visible="false" disable="true" />
 
-                <VBox layoutX="350" layoutY="518" prefWidth="300" spacing="7" alignment="CENTER">
+                <VBox layoutX="365" layoutY="518" prefWidth="270" spacing="7" alignment="CENTER">
                     <HBox spacing="12" alignment="CENTER" styleClass="game-info-panel">
                         <VBox alignment="CENTER" spacing="2" prefWidth="128">
                             <Label text="Player 1" styleClass="game-info-heading" />
@@ -115,62 +115,66 @@
             </children>
         </AnchorPane>
 
-        <VBox fx:id="wagerOverlayPane" alignment="CENTER" spacing="11"
-              prefWidth="760" maxWidth="760" prefHeight="365" maxHeight="365"
-              styleClass="wager-overlay">
-            <Label fx:id="wagerPhaseLabel" text="Confirm both wagers" styleClass="wager-heading"
-                   wrapText="true" maxWidth="720" textAlignment="CENTER" />
-            <HBox alignment="CENTER" spacing="24">
-                <VBox alignment="CENTER" spacing="8" prefWidth="342" maxWidth="342"
-                      styleClass="wager-panel">
-                    <Label text="Player 1's Wagers" styleClass="wager-heading" />
-                    <HBox alignment="CENTER" spacing="16">
-                        <VBox spacing="5" prefWidth="135">
-                            <Label text="Ante ($5–$25)" styleClass="wager-field-label" />
-                            <TextField fx:id="p1AnteField" accessibleText="Player 1 Ante, 5 to 25 dollars"
-                                       promptText="e.g. 10" prefWidth="135" styleClass="wager-input" />
+        <StackPane fx:id="wagerOverlayBackdrop" styleClass="overlay-backdrop" minHeight="650" minWidth="1000" prefHeight="650" prefWidth="1000">
+            <children>
+                <VBox fx:id="wagerOverlayPane" alignment="CENTER" spacing="11"
+                      prefWidth="760" maxWidth="760" prefHeight="365" maxHeight="365"
+                      styleClass="wager-overlay">
+                    <Label fx:id="wagerPhaseLabel" text="Confirm both wagers" styleClass="wager-heading"
+                           wrapText="true" maxWidth="720" textAlignment="CENTER" />
+                    <HBox alignment="CENTER" spacing="24">
+                        <VBox alignment="CENTER" spacing="8" prefWidth="342" maxWidth="342"
+                              styleClass="wager-panel">
+                            <Label text="Player 1's Wagers" styleClass="wager-heading" />
+                            <HBox alignment="CENTER" spacing="16">
+                                <VBox spacing="5" prefWidth="135">
+                                    <Label text="Ante ($5–$25)" styleClass="wager-field-label" />
+                                    <TextField fx:id="p1AnteField" accessibleText="Player 1 Ante, 5 to 25 dollars"
+                                               promptText="e.g. 10" prefWidth="135" styleClass="wager-input" />
+                                </VBox>
+                                <VBox spacing="5" prefWidth="135">
+                                    <Label text="Pair Plus (optional)" styleClass="wager-field-label" />
+                                    <TextField fx:id="p1PairPlusField" accessibleText="Player 1 Pair Plus, optional"
+                                               promptText="0 or 5–25" prefWidth="135" styleClass="wager-input" />
+                                </VBox>
+                            </HBox>
+                            <Label text="Pair Plus: blank, $0, or $5–$25" styleClass="game-info-copy" />
+                            <Button fx:id="p1ConfirmButton" text="Confirm" accessibleText="Confirm Player 1 wagers"
+                                    onAction="#handleP1ConfirmWager" styleClass="gold-button" prefWidth="126" />
+                            <Label fx:id="p1WagerStatusLabel" text="Enter your wagers, then Confirm."
+                                   alignment="CENTER" textAlignment="CENTER" wrapText="true" minHeight="48"
+                                   prefWidth="306" styleClass="wager-feedback" />
                         </VBox>
-                        <VBox spacing="5" prefWidth="135">
-                            <Label text="Pair Plus (optional)" styleClass="wager-field-label" />
-                            <TextField fx:id="p1PairPlusField" accessibleText="Player 1 Pair Plus, optional"
-                                       promptText="0 or 5–25" prefWidth="135" styleClass="wager-input" />
+                        <VBox alignment="CENTER" spacing="8" prefWidth="342" maxWidth="342"
+                              styleClass="wager-panel">
+                            <Label text="Player 2's Wagers" styleClass="wager-heading" />
+                            <HBox alignment="CENTER" spacing="16">
+                                <VBox spacing="5" prefWidth="135">
+                                    <Label text="Ante ($5–$25)" styleClass="wager-field-label" />
+                                    <TextField fx:id="p2AnteField" accessibleText="Player 2 Ante, 5 to 25 dollars"
+                                               promptText="e.g. 10" prefWidth="135" styleClass="wager-input" />
+                                </VBox>
+                                <VBox spacing="5" prefWidth="135">
+                                    <Label text="Pair Plus (optional)" styleClass="wager-field-label" />
+                                    <TextField fx:id="p2PairPlusField" accessibleText="Player 2 Pair Plus, optional"
+                                               promptText="0 or 5–25" prefWidth="135" styleClass="wager-input" />
+                                </VBox>
+                            </HBox>
+                            <Label text="Pair Plus: blank, $0, or $5–$25" styleClass="game-info-copy" />
+                            <Button fx:id="p2ConfirmButton" text="Confirm" accessibleText="Confirm Player 2 wagers"
+                                    onAction="#handleP2ConfirmWager" styleClass="gold-button" prefWidth="126" />
+                            <Label fx:id="p2WagerStatusLabel" text="Enter your wagers, then Confirm."
+                                   alignment="CENTER" textAlignment="CENTER" wrapText="true" minHeight="48"
+                                   prefWidth="306" styleClass="wager-feedback" />
                         </VBox>
                     </HBox>
-                    <Label text="Pair Plus: blank, $0, or $5–$25" styleClass="game-info-copy" />
-                    <Button fx:id="p1ConfirmButton" text="Confirm" accessibleText="Confirm Player 1 wagers"
-                            onAction="#handleP1ConfirmWager" styleClass="gold-button" prefWidth="126" />
-                    <Label fx:id="p1WagerStatusLabel" text="Enter your wagers, then Confirm."
-                           alignment="CENTER" textAlignment="CENTER" wrapText="true" minHeight="48"
-                           prefWidth="306" styleClass="wager-feedback" />
+                    <Button fx:id="startDealButton" text="Deal" onAction="#handleStartDealAfterWagers"
+                            prefHeight="40" prefWidth="155" disable="true" styleClass="gold-button" />
+                    <Label text="Only confirmed wagers are saved when returning to the menu."
+                           styleClass="game-info-copy" />
                 </VBox>
-                <VBox alignment="CENTER" spacing="8" prefWidth="342" maxWidth="342"
-                      styleClass="wager-panel">
-                    <Label text="Player 2's Wagers" styleClass="wager-heading" />
-                    <HBox alignment="CENTER" spacing="16">
-                        <VBox spacing="5" prefWidth="135">
-                            <Label text="Ante ($5–$25)" styleClass="wager-field-label" />
-                            <TextField fx:id="p2AnteField" accessibleText="Player 2 Ante, 5 to 25 dollars"
-                                       promptText="e.g. 10" prefWidth="135" styleClass="wager-input" />
-                        </VBox>
-                        <VBox spacing="5" prefWidth="135">
-                            <Label text="Pair Plus (optional)" styleClass="wager-field-label" />
-                            <TextField fx:id="p2PairPlusField" accessibleText="Player 2 Pair Plus, optional"
-                                       promptText="0 or 5–25" prefWidth="135" styleClass="wager-input" />
-                        </VBox>
-                    </HBox>
-                    <Label text="Pair Plus: blank, $0, or $5–$25" styleClass="game-info-copy" />
-                    <Button fx:id="p2ConfirmButton" text="Confirm" accessibleText="Confirm Player 2 wagers"
-                            onAction="#handleP2ConfirmWager" styleClass="gold-button" prefWidth="126" />
-                    <Label fx:id="p2WagerStatusLabel" text="Enter your wagers, then Confirm."
-                           alignment="CENTER" textAlignment="CENTER" wrapText="true" minHeight="48"
-                           prefWidth="306" styleClass="wager-feedback" />
-                </VBox>
-            </HBox>
-            <Button fx:id="startDealButton" text="Deal" onAction="#handleStartDealAfterWagers"
-                    prefHeight="40" prefWidth="155" disable="true" styleClass="gold-button" />
-            <Label text="Only confirmed wagers are saved when returning to the menu."
-                   styleClass="game-info-copy" />
-        </VBox>
+            </children>
+        </StackPane>
 
         <VBox fx:id="handHelpPane" visible="false" managed="false"
               prefWidth="650" maxWidth="650" maxHeight="470" alignment="CENTER"

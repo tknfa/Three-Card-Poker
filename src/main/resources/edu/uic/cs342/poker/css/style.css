@@ -160,17 +160,35 @@
 .game-phase-heading {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-primary;
+    -fx-text-fill: #3C5D7D;
 }
+
+.root.crimson-theme .game-phase-heading {
+    -fx-text-fill: #50232C;
+}
+
 .game-phase-copy {
     -fx-font-size: 14px;
-    -fx-text-fill: -fx-text-primary;
+    -fx-text-fill: #3C5D7D;
+}
+
+.root.crimson-theme .game-phase-copy {
+    -fx-text-fill: #50232C;
 }
 .wager-overlay {
     -fx-background-color: -fx-base-background;
     -fx-background-radius: 14px;
     -fx-padding: 12px;
 }
+
+.overlay-backdrop {
+    -fx-background-color: rgba(11, 15, 20, 0.82);
+}
+
+.root.crimson-theme .overlay-backdrop {
+    -fx-background-color: rgba(31, 12, 16, 0.82);
+}
+
 .wager-panel {
     -fx-background-color: -fx-panel-background;
     -fx-background-radius: 12px;

@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 
 public class GameplayController implements ScreenController {
@@ -46,6 +47,7 @@ public class GameplayController implements ScreenController {
     @FXML private HBox dealerCardBox, player1CardBox, player2CardBox;
     @FXML private VBox wagerOverlayPane, handHelpPane;
     @FXML private AnchorPane tableControls;
+    @FXML private StackPane wagerOverlayBackdrop;
 
     @Override
     public void setNavigator(ScreenNavigator navigator) {
@@ -98,6 +100,11 @@ public class GameplayController implements ScreenController {
         try {
             gameService.deal();
             refresh();
+
+            if (wagerOverlayBackdrop != null) {
+                wagerOverlayBackdrop.setVisible(false);
+                wagerOverlayBackdrop.setManaged(false);
+            }
 
             if (navigator.isMotionEnabled()) {
                 startAnimation(CardAnimations.deal(dealerCardBox, player1CardBox, player2CardBox), "Dealing cards. Turn motion off to skip.");
@@ -242,6 +249,10 @@ public class GameplayController implements ScreenController {
 
         wagerOverlayPane.setVisible(wagering);
         wagerOverlayPane.setManaged(wagering);
+        if (wagerOverlayBackdrop != null) {
+            wagerOverlayBackdrop.setVisible(wagering);
+            wagerOverlayBackdrop.setManaged(wagering);
+        }
         roundStateLabel.setVisible(!wagering);
         roundStateSubtitle.setVisible(!wagering);
         updateActionAvailability();
@@ -270,9 +281,9 @@ public class GameplayController implements ScreenController {
         p2DecisionLabel.setText(decisionText(two, active == 2));
 
         if (!showdown) {
-            CardDisplay.show(dealerCardBox, round.dealerHand(), CardVisibility.forDealer(phase), 62, 88);
-            CardDisplay.show(player1CardBox, one.hand(), CardVisibility.forPlayer(phase, 1), 62, 88);
-            CardDisplay.show(player2CardBox, two.hand(), CardVisibility.forPlayer(phase, 2), 62, 88);
+            CardDisplay.show(dealerCardBox, round.dealerHand(), CardVisibility.forDealer(phase), 105, 150);
+            CardDisplay.show(player1CardBox, one.hand(), CardVisibility.forPlayer(phase, 1), 105, 150);
+            CardDisplay.show(player2CardBox, two.hand(), CardVisibility.forPlayer(phase, 2), 105, 150);
         }
 
         player1CardBox.getStyleClass().remove("showdown-winner");
@@ -326,13 +337,13 @@ public class GameplayController implements ScreenController {
 
     private void displayShowdown(RoundResult preview) {
         dealerShowdownLabel.setText(ResultText.dealer(preview));
-        CardDisplay.showRanked(dealerCardBox, preview.dealerHand(), 62, 88);
+        CardDisplay.showRanked(dealerCardBox, preview.dealerHand(), 105, 150);
         displayShowdownPlayer(preview.playerOne(), player1CardBox, p1DecisionLabel);
         displayShowdownPlayer(preview.playerTwo(), player2CardBox, p2DecisionLabel);
     }
 
     private void displayShowdownPlayer(PlayerRoundResult player, HBox cards, Label label) {
-        CardDisplay.showRanked(cards, player.hand(), 62, 88);
+        CardDisplay.showRanked(cards, player.hand(), 105, 150);
         label.setText(player.name() + " — " + ResultText.outcome(player.outcome()));
 
         if (player.outcome() == RoundOutcome.PLAYER_WINS) {
