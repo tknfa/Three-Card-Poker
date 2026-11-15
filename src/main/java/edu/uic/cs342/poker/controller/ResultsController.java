@@ -7,6 +7,7 @@ import edu.uic.cs342.poker.model.RoundResult;
 import edu.uic.cs342.poker.service.GameService;
 import edu.uic.cs342.poker.ui.CardDisplay;
 import edu.uic.cs342.poker.ui.ScreenNavigator;
+import edu.uic.cs342.poker.ui.ResultText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,13 +23,13 @@ public class ResultsController implements ScreenController {
     @FXML private Label p1AntePayoutLabel, p1PlayPayoutLabel, p1PairPlusPayoutLabel, p1CumulativeLabel;
     @FXML private Label p2RankTopLabel, p2OutcomeLabel, p2RankBoxLabel;
     @FXML private Label p2AntePayoutLabel, p2PlayPayoutLabel, p2PairPlusPayoutLabel, p2CumulativeLabel;
+    @FXML private Label p1NetLabel, p2NetLabel;
     @FXML private Button playAgainButton;
 
     @Override
     public void setNavigator(ScreenNavigator navigator) {
         this.navigator = navigator;
         this.gameService = navigator.getGameService();
-
         RoundResult result = gameService.getResult();
 
         if (result == null) {
@@ -38,44 +39,29 @@ public class ResultsController implements ScreenController {
         }
 
         roundNumberLabel.setText("Round " + result.roundNumber() + " Summary");
-        dealerRankLabel.setText(result.dealerRank().name().replace('_', ' ') + (result.dealerQualifies() ? " — QUALIFIES" : " — NOT QUALIFIED"));
-        CardDisplay.show(dealerCardBox, result.dealerHand(), true, 76, 108);
-        displayPlayer(result.playerOne(), player1CardBox, p1RankTopLabel, p1OutcomeLabel, p1RankBoxLabel, p1AntePayoutLabel, p1PlayPayoutLabel, p1PairPlusPayoutLabel, p1CumulativeLabel);
-        displayPlayer(result.playerTwo(), player2CardBox, p2RankTopLabel, p2OutcomeLabel, p2RankBoxLabel, p2AntePayoutLabel, p2PlayPayoutLabel, p2PairPlusPayoutLabel, p2CumulativeLabel);
+        dealerRankLabel.setText(ResultText.dealer(result));
+        CardDisplay.showRanked(dealerCardBox, result.dealerHand(), 65, 90);
+        displayPlayer(result.playerOne(), player1CardBox, p1RankTopLabel, p1OutcomeLabel, p1RankBoxLabel, p1AntePayoutLabel, p1PlayPayoutLabel, p1PairPlusPayoutLabel, p1CumulativeLabel, p1NetLabel);
+        displayPlayer(result.playerTwo(), player2CardBox, p2RankTopLabel, p2OutcomeLabel, p2RankBoxLabel, p2AntePayoutLabel, p2PlayPayoutLabel, p2PairPlusPayoutLabel, p2CumulativeLabel, p2NetLabel);
     }
 
-    private void displayPlayer(PlayerRoundResult result, HBox cards, Label rankTop, Label outcome, Label rankBox, Label ante, Label play, Label pairPlus, Label cumulative) {
-        CardDisplay.show(cards, result.hand(), true, 76, 108);
-        String rank = result.handRank().name().replace('_', ' ');
+    private void displayPlayer(PlayerRoundResult result, HBox cards, Label rankTop, Label outcome, Label rankBox, Label ante, Label play, Label pairPlus, Label cumulative, Label net) {
+        CardDisplay.showRanked(cards, result.hand(), 76, 106);
+        String rank = ResultText.rank(result.hand(), result.handRank());
         rankTop.setText(rank);
-        rankBox.setText("RANK: " + rank);
+        rankBox.setText("Rank: " + rank);
+        outcome.setText(ResultText.outcome(result.outcome()));
+        ante.setText(ResultText.ante(result));
+        play.setText(ResultText.play(result));
+        pairPlus.setText(ResultText.pairPlus(result));
+        net.setText("Round net: " + ResultText.signedMoney(result.netChange()));
+        cumulative.setText(ResultText.cumulative(result));
 
-        outcome.setText(outcomeText(result.outcome()));
-
-        String anteDetails = result.carriedAnte() != 0 ? "CARRIED $" + result.carriedAnte() : signedMoney(result.anteNetChange());
-        ante.setText("ANTE ($" + result.anteWager() + "): " + anteDetails);
-
-        play.setText("PLAY ($" + result.playWager() + "): " + signedMoney(result.playNetChange()));
-        String multiplier = result.pairPlusMultiplier() > 0 ? " [" + result.pairPlusMultiplier() + ":1]" : "";
-        pairPlus.setText("PAIR PLUS ($" + result.pairPlusWager() + "): " + signedMoney(result.pairPlusNetChange()) + multiplier);
-        cumulative.setText(money(result.updatedCumulativeWinnings()) + " (" + signedMoney(result.netChange()) + ")");
-    }
-
-    private String outcomeText(RoundOutcome outcome) {
-        if (outcome == RoundOutcome.PLAYER_WINS) { return "WIN"; }
-        if (outcome == RoundOutcome.DEALER_WINS) { return "LOSS"; }
-        if (outcome == RoundOutcome.FOLDED) { return "FOLDED"; }
-        if (outcome == RoundOutcome.TIE) { return "TIE"; }
-
-        return "DEALER NOT QUALIFIED";
-    }
-
-    private String money(int amount) {
-        return amount < 0 ? "-$" + Math.abs(amount) : "$" + amount;
-    }
-
-    private String signedMoney(int amount) {
-        return amount > 0 ? "+" + money(amount) : money(amount);
+        if (result.outcome() == RoundOutcome.PLAYER_WINS) {
+            cards.getStyleClass().add("showdown-winner");
+        } else if (result.outcome() == RoundOutcome.DEALER_WINS || result.outcome() == RoundOutcome.FOLDED) {
+            cards.getStyleClass().add("showdown-loser");
+        }
     }
 
     @FXML
@@ -89,4 +75,3 @@ public class ResultsController implements ScreenController {
     @FXML
     private void handleMainMenu() { navigator.showWelcome(); }
 }
-

@@ -1,168 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="650.0" maxWidth="1000.0" minHeight="650.0" minWidth="1000.0" prefHeight="650.0" prefWidth="1000.0" styleClass="screen-base-background" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uic.cs342.poker.controller.ResultsController">
-    <children>
-        <Label fx:id="roundNumberLabel" layoutX="20.0" layoutY="20.0" text="Round Summary" styleClass="section-title" />
+<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.uic.cs342.poker.controller.ResultsController"
+      alignment="TOP_CENTER" spacing="10" styleClass="screen-base-background"
+      prefWidth="1000" prefHeight="650">
+    <padding><Insets top="12" right="20" bottom="12" left="20" /></padding>
+    <Label fx:id="roundNumberLabel" text="Round Summary" styleClass="section-title" />
 
-        <VBox alignment="CENTER" layoutX="355.0" layoutY="20.0" prefWidth="290.0" spacing="6.0">
-            <children>
-                <Label text="DEALER'S HAND" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="18.0" /></font>
-                </Label>
-                <StackPane prefHeight="135.0" prefWidth="290.0" styleClass="table-panel">
-                    <children>
-                        <HBox fx:id="dealerCardBox" alignment="CENTER" spacing="8.0" />
-                    </children>
-                </StackPane>
-                <Label fx:id="dealerRankLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="16.0" /></font>
-                </Label>
-            </children>
+    <VBox alignment="CENTER" spacing="3">
+        <Label text="DEALER'S HAND" styleClass="summary-hand-heading" />
+        <HBox fx:id="dealerCardBox" alignment="CENTER" spacing="7"
+              prefWidth="250" maxWidth="250" styleClass="summary-tray" />
+        <Label fx:id="dealerRankLabel" text="—" styleClass="summary-hand-rank" />
+    </VBox>
+    <HBox alignment="TOP_CENTER" spacing="16">
+        <VBox alignment="CENTER" spacing="6" prefWidth="330" maxWidth="330">
+            <Label text="PLAYER 1'S HAND" styleClass="summary-hand-heading" />
+            <HBox fx:id="player1CardBox" alignment="CENTER" spacing="8"
+                  prefWidth="280" maxWidth="280" styleClass="summary-tray" />
+            <Label fx:id="p1RankTopLabel" text="—" styleClass="summary-hand-rank" />
+            <VBox alignment="CENTER_LEFT" spacing="7" styleClass="summary-payout-panel">
+                <Label fx:id="p1OutcomeLabel" text="—" alignment="CENTER" maxWidth="320"
+                       wrapText="true" styleClass="summary-outcome" />
+                <Label fx:id="p1RankBoxLabel" text="—" styleClass="summary-copy" />
+                <Label text="Wager payout (net profit/loss)" styleClass="summary-panel-heading" />
+                <Label fx:id="p1AntePayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p1PlayPayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p1PairPlusPayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p1NetLabel" text="—" styleClass="summary-panel-heading" />
+                <Label text="New cumulative winnings" styleClass="summary-panel-heading" />
+                <Label fx:id="p1CumulativeLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+            </VBox>
         </VBox>
 
-        <VBox alignment="CENTER" layoutX="75.0" layoutY="175.0" prefWidth="290.0" spacing="6.0">
-            <children>
-                <Label text="PLAYER 1'S HAND" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="18.0" /></font>
-                </Label>
-                <StackPane prefHeight="135.0" prefWidth="290.0" styleClass="table-panel">
-                    <children>
-                        <HBox fx:id="player1CardBox" alignment="CENTER" spacing="8.0" />
-                    </children>
-                </StackPane>
-                <Label fx:id="p1RankTopLabel" text="—" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="16.0" /></font>
-                </Label>
-
-                <StackPane prefHeight="225.0" prefWidth="290.0" styleClass="result-card-container">
-                    <children>
-                        <VBox alignment="CENTER" spacing="8.0" styleClass="result-card-inner">
-                            <children>
-                                <VBox alignment="CENTER" spacing="1.0">
-                                    <children>
-                                        <Label fx:id="p1OutcomeLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="18.0" /></font>
-                                        </Label>
-                                        <Label fx:id="p1RankBoxLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="12.0" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-
-                                <VBox alignment="CENTER" spacing="2.0">
-                                    <children>
-                                        <Label text="WAGER PAYOUT (NET):" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p1AntePayoutLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p1PlayPayoutLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p1PairPlusPayoutLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-
-                                <VBox alignment="CENTER" spacing="1.0">
-                                    <children>
-                                        <Label text="NEW CUMULATIVE WINNINGS:" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p1CumulativeLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="12.5" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </VBox>
-                    </children>
-                </StackPane>
-            </children>
+        <VBox alignment="CENTER" spacing="10" prefWidth="230" maxWidth="230">
+            <VBox alignment="CENTER_LEFT" spacing="5" styleClass="rules-panel">
+                <Label text="Hand Payouts" styleClass="summary-hand-heading" />
+                <Label text="Pair Plus profit" styleClass="rules-copy" />
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Straight Flush" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="40:1" styleClass="summary-reference" />
+                </HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Three of a Kind" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="30:1" styleClass="summary-reference" />
+                </HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Straight" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="6:1" styleClass="summary-reference" />
+                </HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Flush" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="3:1" styleClass="summary-reference" />
+                </HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Pair" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="1:1" styleClass="summary-reference" />
+                </HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="High Card" prefWidth="133" styleClass="summary-reference" />
+                    <Label text="None" styleClass="summary-reference" />
+                </HBox>
+                <Label text="Profit = wager × multiplier. High Card loses the Pair Plus wager. Folding forfeits Pair Plus."
+                       wrapText="true" maxWidth="198" styleClass="summary-reference" />
+            </VBox>
+            <Label text="Bright cards establish rank; dim cards can still break ties. Gold tray = win; muted tray = loss or fold."
+                   wrapText="true" textAlignment="CENTER" maxWidth="220" styleClass="summary-reference" />
+            <Button id="resultsMenuButton" text="Main Menu" onAction="#handleMainMenu"
+                    prefWidth="170" minHeight="36" styleClass="secondary-button" />
+            <Button fx:id="playAgainButton" text="Play Again" onAction="#handlePlayAgain"
+                    prefWidth="170" minHeight="44" styleClass="gold-button" />
         </VBox>
-
-        <VBox alignment="CENTER" layoutX="635.0" layoutY="175.0" prefWidth="290.0" spacing="6.0">
-            <children>
-                <Label text="PLAYER 2'S HAND" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="18.0" /></font>
-                </Label>
-                <StackPane prefHeight="135.0" prefWidth="290.0" styleClass="table-panel">
-                    <children>
-                        <HBox fx:id="player2CardBox" alignment="CENTER" spacing="8.0" />
-                    </children>
-                </StackPane>
-                <Label fx:id="p2RankTopLabel" text="—" textFill="#E0E6ED">
-                    <font><Font name="Georgia" size="16.0" /></font>
-                </Label>
-
-                <StackPane prefHeight="225.0" prefWidth="290.0" styleClass="result-card-container">
-                    <children>
-                        <VBox alignment="CENTER" spacing="8.0" styleClass="result-card-inner">
-                            <children>
-                                <VBox alignment="CENTER" spacing="1.0">
-                                    <children>
-                                        <Label fx:id="p2OutcomeLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="18.0" /></font>
-                                        </Label>
-                                        <Label fx:id="p2RankBoxLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="12.0" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-
-                                <VBox alignment="CENTER" spacing="2.0">
-                                    <children>
-                                        <Label text="WAGER PAYOUT (NET):" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p2AntePayoutLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p2PlayPayoutLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p2PairPlusPayoutLabel" wrapText="true" maxWidth="260.0" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-
-                                <VBox alignment="CENTER" spacing="1.0">
-                                    <children>
-                                        <Label text="NEW CUMULATIVE WINNINGS:" textFill="#131820">
-                                            <font><Font name="Georgia" size="11.5" /></font>
-                                        </Label>
-                                        <Label fx:id="p2CumulativeLabel" text="—" textFill="#131820">
-                                            <font><Font name="Georgia" size="12.5" /></font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </VBox>
-                    </children>
-                </StackPane>
-            </children>
+        <VBox alignment="CENTER" spacing="6" prefWidth="330" maxWidth="330">
+            <Label text="PLAYER 2'S HAND" styleClass="summary-hand-heading" />
+            <HBox fx:id="player2CardBox" alignment="CENTER" spacing="8"
+                  prefWidth="280" maxWidth="280" styleClass="summary-tray" />
+            <Label fx:id="p2RankTopLabel" text="—" styleClass="summary-hand-rank" />
+            <VBox alignment="CENTER_LEFT" spacing="7" styleClass="summary-payout-panel">
+                <Label fx:id="p2OutcomeLabel" text="—" alignment="CENTER" maxWidth="320"
+                       wrapText="true" styleClass="summary-outcome" />
+                <Label fx:id="p2RankBoxLabel" text="—" styleClass="summary-copy" />
+                <Label text="Wager payout (net profit/loss)" styleClass="summary-panel-heading" />
+                <Label fx:id="p2AntePayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p2PlayPayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p2PairPlusPayoutLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+                <Label fx:id="p2NetLabel" text="—" styleClass="summary-panel-heading" />
+                <Label text="New cumulative winnings" styleClass="summary-panel-heading" />
+                <Label fx:id="p2CumulativeLabel" text="—" wrapText="true" maxWidth="304" styleClass="summary-copy" />
+            </VBox>
         </VBox>
-
-        <VBox alignment="CENTER" layoutX="415.0" layoutY="505.0" prefWidth="170.0" spacing="12.0">
-            <children>
-                <Button mnemonicParsing="false" onAction="#handleMainMenu" prefHeight="36.0" prefWidth="110.0" styleClass="secondary-button" text="← Main Menu">
-                    <font><Font size="11.5" /></font>
-                </Button>
-                <Button mnemonicParsing="false" fx:id="playAgainButton" onAction="#handlePlayAgain" prefHeight="58.0" prefWidth="170.0" styleClass="gold-button" text="↻ Play Again">
-                    <font><Font size="15.0" /></font>
-                </Button>
-            </children>
-        </VBox>
-    </children>
-</AnchorPane>
+    </HBox>
+</VBox>

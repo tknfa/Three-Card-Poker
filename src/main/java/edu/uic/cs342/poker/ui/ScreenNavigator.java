@@ -16,6 +16,7 @@ public class ScreenNavigator {
     private final Stage stage;
     private final GameService gameService;
     private boolean alternateTheme;
+    private boolean motionEnabled = true;
 
     public ScreenNavigator(Stage stage, GameService gameService) {
         this.stage = stage;
@@ -44,10 +45,12 @@ public class ScreenNavigator {
             showWelcome();
             return;
         }
+
         if (gameService.getPhase() == GamePhase.RESULTS) {
             showResults();
             return;
         }
+
         showScreen("gameplay.fxml");
     }
 
@@ -56,6 +59,7 @@ public class ScreenNavigator {
             showGameplay();
             return;
         }
+
         showScreen("results.fxml");
     }
 
@@ -78,13 +82,19 @@ public class ScreenNavigator {
 
     private void setScene(Parent root) {
         Scene scene = new Scene(root, 1000, 650);
-        if (alternateTheme) {
-            root.getStyleClass().add("classic-green");
-        }
+        applyTheme(root);
         scene.getStylesheets().add(ScreenNavigator.class.getResource("/edu/uic/cs342/poker/css/style.css").toExternalForm());
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public boolean isMotionEnabled() {
+        return motionEnabled;
+    }
+
+    public void toggleMotion() {
+        motionEnabled = !motionEnabled;
     }
 
     public boolean isAlternateTheme() {
@@ -93,11 +103,14 @@ public class ScreenNavigator {
 
     public void toggleTheme() {
         alternateTheme = !alternateTheme;
-        Parent root = stage.getScene().getRoot();
+        applyTheme(stage.getScene().getRoot());
+    }
+
+    private void applyTheme(Parent root) {
+        root.getStyleClass().remove("crimson-theme");
+
         if (alternateTheme) {
-            root.getStyleClass().add("classic-green");
-        } else {
-            root.getStyleClass().remove("classic-green");
+            root.getStyleClass().add("crimson-theme");
         }
     }
 

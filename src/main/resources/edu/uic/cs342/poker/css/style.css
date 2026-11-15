@@ -3,78 +3,70 @@
     -fx-secondary-background: #1c3269;
     -fx-panel-background: #3C5D7D;
     -fx-accent-gold: #E0C68F;
+    -fx-accent-text: #F0D9A5;
+    -fx-gold-hover: #F0D9A5;
+    -fx-panel-hover: #48698A;
+    -fx-table-surround: #080f24;
     -fx-text-primary: #F5F0E9;
-    -fx-text-muted: #D8CBC2;
     -fx-card-bg: #D8CBC2;
-    -fx-card-border: #112250;
-    -fx-background-color: #112250;
+    -fx-background-color: -fx-base-background;
+    -fx-font-family: "System";
+    -fx-font-size: 14px;
 }
 
-.root.classic-green {
+.root.crimson-theme {
     -fx-base-background: #1f0c10;
     -fx-secondary-background: #2a1117;
     -fx-panel-background: #38171f;
-    -fx-accent-gold: #C5A059; /* Soft antique brass gold */
+    -fx-accent-gold: #C5A059;
+    -fx-accent-text: #E1BE7D;
+    -fx-gold-hover: #E1BE7D;
+    -fx-panel-hover: #522831;
+    -fx-table-surround: #140609;
     -fx-text-primary: #fbeee4;
-    -fx-text-muted: #d4b5bc;
     -fx-card-bg: #f0ece1;
-    -fx-card-border: #1f0c10;
-    -fx-background-color: #1f0c10;
 }
 
 .label {
-    -fx-font-family: "Georgia";
     -fx-text-fill: -fx-text-primary;
 }
 
+.button {
+    -fx-font-size: 14px;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+}
 .gold-button {
     -fx-background-color: -fx-accent-gold;
     -fx-text-fill: -fx-base-background;
     -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-cursor: hand;
 }
-
-.gold-button:hover {
-    -fx-opacity: 0.9;
-}
-
 .secondary-button {
     -fx-background-color: -fx-panel-background;
     -fx-text-fill: -fx-text-primary;
-    -fx-background-radius: 8px;
-    -fx-cursor: hand;
 }
-
-.secondary-button:hover {
-    -fx-opacity: 0.85;
+.gold-button:hover { -fx-background-color: -fx-gold-hover; }
+.secondary-button:hover { -fx-background-color: -fx-panel-hover; }
+/* Use a dark ring inside gold buttons, a light ring inside dark buttons. */
+.gold-button:focused { -fx-border-color: -fx-base-background; }
+.secondary-button:focused { -fx-border-color: -fx-text-primary; }
+.gold-button:disabled {
+    -fx-background-color: -fx-accent-gold;
+    -fx-opacity: 0.60;
 }
+.secondary-button:disabled {
+    -fx-background-color: -fx-panel-background;
+    -fx-opacity: 0.60;
+}
+.button:disabled { -fx-cursor: default; }
 
 .table-panel {
     -fx-background-color: -fx-panel-background;
     -fx-background-radius: 18px;
     -fx-padding: 12px;
-}
-
-.result-card-container {
-    -fx-background-color: -fx-card-bg;
-    -fx-background-radius: 25px;
-    -fx-padding: 10px;
-}
-
-.result-card-inner {
-    -fx-border-color: -fx-card-border;
-    -fx-border-radius: 18px;
-    -fx-border-width: 1.2px;
-    -fx-padding: 12px;
-}
-
-.overlay-backdrop {
-    -fx-background-color: rgba(17, 34, 80, 0.85);
-}
-
-.root.classic-green .overlay-backdrop {
-    -fx-background-color: rgba(31, 12, 16, 0.85);
 }
 
 .table-background {
@@ -84,29 +76,12 @@
     -fx-background-repeat: no-repeat;
 }
 
-.root.classic-green .table-background {
+.root.crimson-theme .table-background {
     -fx-background-image: url("../images/TableRed.png");
 }
 
-.info-box-panel {
-    -fx-background-image: url("../images/InfoBox.png");
-    -fx-background-size: 100% 100%;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
-}
-
-.root.classic-green .info-box-panel {
-    -fx-background-image: url("../images/InfoBoxRed.png");
-}
-
-/* Base Background Color */
-.screen-base-background {
-    -fx-background-color: #080f24;
-}
-
-.root.classic-green .screen-base-background {
-    -fx-background-color: #140609;
-}
+.screen-base-background { -fx-background-color: -fx-table-surround; }
+.screen-root { -fx-background-color: -fx-base-background; }
 
 .card-face, .card-back {
     -fx-background-size: 100% 100%;
@@ -115,30 +90,23 @@
 }
 .card-face { -fx-background-image: url("../images/Blank_Card.png"); }
 .card-back { -fx-background-image: url("../images/Card_Back.png"); }
-.root.classic-green .card-face { -fx-background-image: url("../images/BlankCardRed.png"); }
-.root.classic-green .card-back { -fx-background-image: url("../images/CardBackRed.png"); }
+.root.crimson-theme .card-face { -fx-background-image: url("../images/BlankCardRed.png"); }
+.root.crimson-theme .card-back { -fx-background-image: url("../images/CardBackRed.png"); }
 .card-face .label { -fx-text-fill: #202020; -fx-font-weight: bold; }
-.card-face .red-suit { -fx-text-fill: #9e202d; }
+.card-face .red-suit { -fx-text-fill: #521018; }
 .card-rank { -fx-font-size: 16px; }
 .card-suit { -fx-font-size: 24px; }
-.result-card-inner .label { -fx-text-fill: #131820; }
-.root.classic-green.screen-base-background { -fx-background-color: #140609; }
-.gold-button:focused, .secondary-button:focused, .button:focused {
-    -fx-border-color: -fx-accent-gold;
-    -fx-border-width: 2px;
-    -fx-border-radius: 8px;
+.menu-title, .menu-subtitle, .screen-title, .section-title,
+.wager-heading, .game-phase-heading, .summary-hand-heading {
+    -fx-font-family: "Georgia";
 }
-.gold-button:disabled, .secondary-button:disabled { -fx-opacity: 0.45; }
-.screen-root { -fx-background-color: -fx-base-background; }
-.info-panel { -fx-background-color: -fx-panel-background; -fx-padding: 16px; -fx-background-radius: 12px; }
 .screen-title { -fx-font-size: 26px; -fx-font-weight: bold; }
 .section-title, .wager-heading { -fx-font-size: 18px; -fx-font-weight: bold; }
-.status-label { -fx-text-fill: -fx-text-muted; }
 
 .menu-title {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: -fx-accent-gold;
+    -fx-text-fill: -fx-accent-text;
 }
 .menu-subtitle {
     -fx-font-size: 15px;
@@ -147,13 +115,6 @@
 }
 #startButton, #rulesButton, #quitButton, #themeButton, #rulesBackButton {
     -fx-font-size: 15px;
-    -fx-border-width: 2px;
-    -fx-border-color: transparent;
-    -fx-border-radius: 8px;
-}
-#startButton:focused, #rulesButton:focused, #quitButton:focused,
-#themeButton:focused, #rulesBackButton:focused {
-    -fx-border-color: -fx-text-primary;
 }
 .rules-panel {
     -fx-background-color: -fx-panel-background;
@@ -169,3 +130,136 @@
     -fx-font-weight: bold;
     -fx-text-fill: -fx-text-primary;
 }
+
+.game-info-panel {
+    -fx-background-color: -fx-secondary-background;
+    -fx-background-radius: 10px;
+    -fx-background-image: url("../images/InfoBox.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 8px;
+}
+.root.crimson-theme .game-info-panel {
+    -fx-background-image: url("../images/InfoBoxRed.png");
+}
+.game-info-heading {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-accent-text;
+}
+.game-info-copy {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+.game-info-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+.game-phase-heading {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+.game-phase-copy {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-primary;
+}
+.wager-overlay {
+    -fx-background-color: -fx-base-background;
+    -fx-background-radius: 14px;
+    -fx-padding: 12px;
+}
+.wager-panel {
+    -fx-background-color: -fx-panel-background;
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+}
+.wager-field-label, .wager-feedback {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.wager-feedback-error { -fx-text-fill: #FFD2CB; -fx-font-weight: bold; }
+.wager-feedback-confirmed { -fx-text-fill: #D1F1DD; -fx-font-weight: bold; }
+.wager-input {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #202020;
+    -fx-prompt-text-fill: #565656;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+}
+.wager-input:focused { -fx-border-color: -fx-base-background; }
+.wager-input:disabled { -fx-opacity: 0.8; }
+
+.active-turn {
+    -fx-border-color: -fx-accent-gold;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
+}
+.active-turn-label {
+    -fx-text-fill: -fx-accent-text;
+    -fx-font-weight: bold;
+}
+.hand-help-panel {
+    -fx-background-color: -fx-base-background;
+    -fx-background-radius: 14px;
+    -fx-border-color: -fx-accent-gold;
+    -fx-border-radius: 14px;
+    -fx-border-width: 2px;
+    -fx-padding: 16px;
+}
+.hand-help-row { -fx-padding: 5px 3px; }
+.hand-help-example {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-accent-text;
+}
+
+#p1PlayButton, #p2PlayButton, #p1FoldButton, #p2FoldButton,
+#handHelpButton, #closeHandHelpButton, #viewResultsButton {
+    -fx-font-size: 13px;
+}
+
+.rank-card-primary {
+    -fx-border-color: -fx-accent-gold;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+.rank-card-secondary { -fx-opacity: 0.85; }
+.showdown-winner {
+    -fx-border-color: -fx-accent-gold;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+
+.showdown-loser .card-face { -fx-opacity: 0.93; }
+.showdown-loser .rank-card-secondary { -fx-opacity: 0.85; }
+.summary-tray {
+    -fx-background-color: -fx-panel-background;
+    -fx-background-radius: 10px;
+    -fx-padding: 6px;
+}
+.summary-hand-heading, .summary-outcome {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-accent-text;
+}
+.summary-hand-rank {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+.summary-payout-panel {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 14px;
+    -fx-padding: 11px;
+}
+.summary-payout-panel .label { -fx-text-fill: #131820; }
+.summary-copy { -fx-font-size: 14px; }
+.summary-panel-heading { -fx-font-size: 14px; -fx-font-weight: bold; }
+.summary-reference { -fx-font-size: 13px; -fx-text-fill: -fx-text-primary; }

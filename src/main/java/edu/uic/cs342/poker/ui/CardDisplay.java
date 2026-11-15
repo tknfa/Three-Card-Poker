@@ -1,8 +1,10 @@
 package edu.uic.cs342.poker.ui;
 
+import edu.uic.cs342.poker.logic.HandEvaluator;
 import edu.uic.cs342.poker.model.Card;
 import edu.uic.cs342.poker.model.Hand;
 import edu.uic.cs342.poker.model.Suit;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -12,10 +14,28 @@ public final class CardDisplay {
     private CardDisplay() { }
 
     public static void show(HBox box, Hand hand, boolean faceUp, double width, double height) {
+        show(box, hand, faceUp ? CardVisibility.FACE_UP : CardVisibility.FACE_DOWN, width, height);
+    }
+
+    public static void show(HBox box, Hand hand, CardVisibility visibility, double width, double height) {
+        showCards(box, hand, visibility, width, height, false);
+    }
+
+    public static void showRanked(HBox box, Hand hand, double width, double height) {
+        showCards(box, hand, CardVisibility.FACE_UP, width, height, true);
+    }
+
+    private static void showCards(HBox box, Hand hand, CardVisibility visibility, double width, double height, boolean emphasizeRank) {
         box.getChildren().clear();
 
-        if (hand == null && faceUp) {
+        if (visibility == CardVisibility.EMPTY || (visibility == CardVisibility.FACE_UP && hand == null)) {
             return;
+        }
+
+        List<Card> relevant = List.of();
+
+        if (emphasizeRank) {
+            relevant = HandEvaluator.rankCards(hand.getCards());
         }
 
         for (int i = 0; i < 3; i++) {
@@ -25,7 +45,7 @@ public final class CardDisplay {
             tile.setPrefSize(width, height);
             tile.setMaxSize(width, height);
 
-            if (!faceUp) {
+            if (visibility == CardVisibility.FACE_DOWN) {
                 tile.getStyleClass().add("card-back");
                 tile.setAccessibleText("Face-down card");
             } else {
@@ -41,7 +61,18 @@ public final class CardDisplay {
                     suit.getStyleClass().add("red-suit");
                 }
 
-                tile.setAccessibleText(card.rank().name() + " of " + card.suit().name());
+                String description = card.rank().name() + " of " + card.suit().name();
+                if (emphasizeRank) {
+                    if (relevant.contains(card)) {
+                        tile.getStyleClass().add("rank-card-primary");
+                        description += ", establishes hand rank";
+                    } else {
+                        tile.getStyleClass().add("rank-card-secondary");
+                        description += ", may break a tie";
+                    }
+                }
+
+                tile.setAccessibleText(description);
                 tile.getChildren().addAll(rank, suit);
             }
 
@@ -54,7 +85,6 @@ public final class CardDisplay {
         if (card.value() == 13) { return "K"; }
         if (card.value() == 12) { return "Q"; }
         if (card.value() == 11) { return "J"; }
-
         return "" + card.value();
     }
 
@@ -62,7 +92,6 @@ public final class CardDisplay {
         if (suit == Suit.HEARTS) { return "♥"; }
         if (suit == Suit.DIAMONDS) { return "♦"; }
         if (suit == Suit.CLUBS) { return "♣"; }
-
         return "♠";
     }
 }

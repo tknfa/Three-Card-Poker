@@ -19,6 +19,4 @@ public final class ThreeCardLogic {
     public static int evalPPWinnings(ArrayList<Card> hand, int bet) {
         return PayoutCalculator.pairPlusWinnings(hand, bet);
     }
-
-
 }

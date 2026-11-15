@@ -3,6 +3,7 @@ package edu.uic.cs342.poker.logic;
 import edu.uic.cs342.poker.model.Card;
 import edu.uic.cs342.poker.model.Hand;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class HandEvaluator {
@@ -47,6 +48,32 @@ public final class HandEvaluator {
         }
 
         return HandRank.HIGH_CARD;
+    }
+
+    public static List<Card> rankCards(List<Card> cards) {
+        HandRank rank = evaluate(cards);
+        ArrayList<Card> relevant = new ArrayList<>();
+        if (rank == HandRank.PAIR) {
+            for (int i = 0; i < cards.size(); i++) {
+                for (int k = 0; k < cards.size(); k++) {
+                    if (i != k && cards.get(i).value() == cards.get(k).value()) {
+                        relevant.add(cards.get(i));
+                        break;
+                    }
+                }
+            }
+        } else if (rank == HandRank.HIGH_CARD) {
+            Card highest = cards.get(0);
+            for (Card card : cards) {
+                if (card.value() > highest.value()) {
+                    highest = card;
+                }
+            }
+            relevant.add(highest);
+        } else {
+            return List.copyOf(cards);
+        }
+        return List.copyOf(relevant);
     }
 
     private static boolean hasConsecutiveValues(List<Card> cards) {

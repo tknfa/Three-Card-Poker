@@ -33,6 +33,7 @@ public final class GameService {
         if (dealer == null) {
             throw new IllegalArgumentException("A dealer is required");
         }
+
         this.dealer = dealer;
     }
 
@@ -51,23 +52,25 @@ public final class GameService {
             players[i].resetRound();
             confirmed[i] = false;
         }
+
         dealerHand = null;
         result = null;
         roundNumber++;
         phase = GamePhase.WAGERING;
     }
 
-    // Player numbers are 1 and 2, matching the labels on the wireframes.
     public void confirmWagers(int playerNumber, int ante, int pairPlus) {
         int index = playerIndex(playerNumber);
         requirePhase(GamePhase.WAGERING);
+
         if (confirmed[index]) {
             throw new IllegalStateException("This player's wagers are already confirmed");
         }
-        // Provisional interpretation of the assignment's carry-forward rule.
+
         if (carriedAntes[index] != 0 && ante != carriedAntes[index]) {
             throw new IllegalArgumentException("Ante must match the carried wager of $" + carriedAntes[index]);
         }
+
         players[index].setWagers(ante, pairPlus);
         confirmed[index] = true;
     }
@@ -88,7 +91,6 @@ public final class GameService {
         Hand house = dealer.dealHand();
         verifyUniqueCards(first, second, house);
 
-        // Assign only after all three valid hands have been obtained.
         players[0].setHand(first);
         players[1].setHand(second);
         dealerHand = house;
@@ -98,6 +100,7 @@ public final class GameService {
     private void verifyUniqueCards(Hand first, Hand second, Hand house) {
         Hand[] hands = {first, second, house};
         ArrayList<Card> dealt = new ArrayList<>();
+
         for (Hand hand : hands) {
             if (hand == null) {
                 throw new IllegalStateException("Dealer returned a missing hand");
@@ -106,6 +109,7 @@ public final class GameService {
                 if (dealt.contains(card)) {
                     throw new IllegalStateException("Dealer returned a duplicate card");
                 }
+
                 dealt.add(card);
             }
         }
@@ -125,9 +129,11 @@ public final class GameService {
 
     private int requireTurn(int playerNumber) {
         int index = playerIndex(playerNumber);
+
         if (getActivePlayer() != playerNumber) {
             throw new IllegalStateException("It is not this player's turn");
         }
+
         return index;
     }
 
@@ -139,11 +145,17 @@ public final class GameService {
         }
     }
 
-    public RoundResult resolveRound() {
+    public RoundResult previewRound() {
         requirePhase(GamePhase.SHOWDOWN);
         PlayerRoundResult first = PayoutCalculator.settlePlayer(getPlayer(1), dealerHand);
         PlayerRoundResult second = PayoutCalculator.settlePlayer(getPlayer(2), dealerHand);
-        RoundResult completed = new RoundResult(roundNumber, dealerHand, HandEvaluator.evaluate(dealerHand.getCards()), HandEvaluator.dealerQualifies(dealerHand.getCards()), first, second);
+        return new RoundResult(roundNumber, dealerHand, HandEvaluator.evaluate(dealerHand.getCards()), HandEvaluator.dealerQualifies(dealerHand.getCards()), first, second);
+    }
+
+    public RoundResult resolveRound() {
+        RoundResult completed = previewRound();
+        PlayerRoundResult first = completed.playerOne();
+        PlayerRoundResult second = completed.playerTwo();
 
         players[0].addWinnings(first.netChange());
         players[1].addWinnings(second.netChange());
@@ -151,6 +163,7 @@ public final class GameService {
         carriedAntes[1] = second.carriedAnte();
         result = completed;
         phase = GamePhase.RESULTS;
+
         return result;
     }
 
@@ -160,6 +173,7 @@ public final class GameService {
     public int getActivePlayer() {
         if (phase == GamePhase.PLAYER_ONE_TURN) { return 1; }
         if (phase == GamePhase.PLAYER_TWO_TURN) { return 2; }
+
         return 0;
     }
 
@@ -173,6 +187,7 @@ public final class GameService {
         if (phase == GamePhase.SHOWDOWN || phase == GamePhase.RESULTS) {
             return dealerHand;
         }
+
         return null;
     }
 
@@ -186,6 +201,7 @@ public final class GameService {
         if (playerNumber != 1 && playerNumber != 2) {
             throw new IllegalArgumentException("Player number must be 1 or 2");
         }
+
         return playerNumber - 1;
     }
 
