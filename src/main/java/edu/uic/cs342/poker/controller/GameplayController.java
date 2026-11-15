@@ -15,6 +15,8 @@ import edu.uic.cs342.poker.ui.ScreenNavigator;
 import edu.uic.cs342.poker.ui.WagerInput;
 import edu.uic.cs342.poker.ui.ResultText;
 import javafx.animation.Transition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -126,12 +128,25 @@ public class GameplayController implements ScreenController {
         try {
             if (play) { gameService.play(player); }
             else { gameService.fold(player); }
-            refresh();
 
-            if (gameService.getPhase() == GamePhase.SHOWDOWN && navigator.isMotionEnabled()) {
-                startAnimation(CardAnimations.showdown(dealerCardBox, player1CardBox, player2CardBox), "Revealing the dealer. Turn motion off to skip.");
+            if (!navigator.isMotionEnabled()) {
+                refresh();
+                return;
             }
 
+            if (gameService.getActivePlayer() == 2) {
+                ParallelTransition turnFlip = new ParallelTransition(
+                        CardAnimations.flip(player1CardBox, (node, i) -> {}),
+                        CardAnimations.flip(player2CardBox, (node, i) -> {})
+                );
+
+                turnFlip.setOnFinished(e -> {
+                    completeAnimation();
+                    refresh();
+                });
+
+                startAnimation(turnFlip, "Switching to Player 2's turn.");
+            }
         } catch (IllegalStateException e) {
             roundStateSubtitle.setText(e.getMessage());
         }
@@ -188,6 +203,7 @@ public class GameplayController implements ScreenController {
             currentAnimation.setOnFinished(null);
             currentAnimation.stop();
             completeAnimation();
+            refresh();
         }
     }
 
