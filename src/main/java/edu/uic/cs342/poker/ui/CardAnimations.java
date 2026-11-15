@@ -4,6 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -37,6 +40,35 @@ public final class CardAnimations {
             movement.getChildren().add(slide);
             index++;
         }
+    }
+
+    public static ParallelTransition flip(HBox tray, java.util.function.BiConsumer<Node, Integer> onMidpoint) {
+        ParallelTransition group = new ParallelTransition();
+        int index = 0;
+
+        for (Node card : tray.getChildren()) {
+            final int cardIndex = index;
+            Timeline flipTimeline = new Timeline(
+                    new KeyFrame(Duration.ZERO,
+                            new KeyValue(card.scaleXProperty(), 1.0)
+                    ),
+                    new KeyFrame(Duration.millis(200), event -> {
+                        if (onMidpoint != null) {
+                            onMidpoint.accept(card, cardIndex);
+                        }
+                    },
+                            new KeyValue(card.scaleXProperty(), 0.0)
+                    ),
+                    new KeyFrame(Duration.millis(400),
+                            new KeyValue(card.scaleXProperty(), 1.0)
+                    )
+            );
+            flipTimeline.setDelay(Duration.millis(index * 60));
+            group.getChildren().add(flipTimeline);
+            index++;
+        }
+
+        return group;
     }
 
     public static SequentialTransition showdown(HBox dealer, HBox first, HBox second) {
@@ -82,6 +114,8 @@ public final class CardAnimations {
         for (Node card : tray.getChildren()) {
             card.setTranslateX(0);
             card.setTranslateY(0);
+            card.setScaleX(1.0);
+            card.setScaleY(1.0);
         }
     }
 }
